@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>CarSafe</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+</head>
+<body>
+
+<header>
+    <h1><%= title %></h1>
+</header>
+
+<nav>
+    <span><a href="/"><img src="/img/CarSafe-SM.png" style="width:100px;height:90px"></a></span>
+    <span><a title="Main" href="/">home</a></span>
+    <span><a title="Crime Data" href="/crimeTable">crime data</a></span>
+    <span><a title="Crime Map" href="/map">crime map</a></span>
+
+
+
+    <% if (user) { %>
+
+    <% if (user.type == 'admin') { %>
+        <span><a title="Admin Page" href="/admin">admin panel</a></span>
+    <% } %>
+
+    <!-- <span><a title="Post" href="/post">post</a></span>-->
+    <span><a title="Comment" href="/comment">comment</a></span>
+    <span><a title="Log Out" href="/logout">logout</a></span>
+
+    <% } else { %>
+    <span><a title="Login" href="/login">login</a></span>
+    <span><a title="Register" href="/reg">register</a></span>
+
+    <% } %>
+</nav>
+
+<article>
+    <% if (success) { %>
+    <div class="success"><%= success %></div>
+    <% } %>
+    <% if (error) { %>
+    <div class="error"><%= error %> </div>
+<% } %>

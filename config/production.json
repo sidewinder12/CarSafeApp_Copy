@@ -1,0 +1,4 @@
+{
+  "cookieSecret": "myblog",
+  "uri": "mongodb://carsafe:sons@dbh15.mongolab.com:27157/heroku_app34795581"
+}

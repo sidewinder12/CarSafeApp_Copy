@@ -1,0 +1,19 @@
+<%- include header %>
+
+<table id="crimeTable">
+
+    <th width="40%">Crime Type</th>
+    <th width="5%">Month</th>
+    <th width="55%">Address</th>
+<%
+    for(var i in crimes){%>
+        <tr>
+            <td width="40%"><%=crimes[i].type%></td>
+            <td width="5%"><%=crimes[i].month%></td>
+            <td width="55%"><%=crimes[i].address%></td>
+        </tr>
+    <%}%>
+
+</table>
+<a href="javascript:scroll(0,0)">Back to top</a>
+<%- include footer %>

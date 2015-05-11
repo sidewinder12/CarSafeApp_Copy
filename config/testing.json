@@ -1,0 +1,4 @@
+{
+  "cookieSecret": "myblog",
+  "uri": "mongodb://localhost/CarSafeTest"
+}

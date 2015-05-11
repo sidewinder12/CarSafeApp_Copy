@@ -1,0 +1,34 @@
+<%- include header %>
+<p>&nbsp</p>
+
+<form method="post">
+
+    <table id="commentTable">
+        <tr><td>Title:</td><td> <input type="text" name="title"/></tr></td></tr>
+        <tr><td>Body:</td><td> <textarea name="body"></textarea></td></tr>
+
+        <select name="region">
+            <option value="Select Neighbourhood">Select Neighbourhood</option>
+            <%
+            for(var i in regions){%>
+                <option value="<%=regions[i].name%>"><%=regions[i].name%></option>
+            <%}%>
+        </select>
+
+    </table>
+    <p align="center"><button type="submit" class="btnExample">Submit comment</button></p>
+
+</form>
+<p><h1><u>My comments:</u></h1></p>
+<%
+for(var i in user.comments){%>
+<ul>
+    <li><h3><%=user.comments[i].title%></h3></li>
+    <li><i>Neighbourhood: <%=user.comments[i].region%></i></li>
+    <li><%=user.comments[i].body%></li><br>
+</ul>
+<%}%>
+
+
+
+<%- include footer %>

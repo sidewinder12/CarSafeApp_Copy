@@ -1,0 +1,35 @@
+<%- include header %>
+<p></p><h2>File Downloader</h2></p>
+<form method='post' action='/download' xmlns="http://www.w3.org/1999/html">
+    <p>Download from: <input type="url" name="link" style="width: 70%"/></p>
+    <button class="btnExample" type="submit" value="Submit">Download the file Now!</button>
+</form>
+
+<p><h2>Database Update</h2></p>
+<form  method='post' action='/update'>
+    <button class="btnExample" type="submit" value="Submit" >Update the database now!</button>
+</form>
+
+<p><h2>User Management Interface</h2></p>
+
+<table id="userTable">
+<th width="20%" >Username</th><th width="20%">Email</th><th width="10%">User Type</th><th width="50%" colspan="2">Operation</th>
+<%
+for (var aUser in listUser)
+{  if(listUser[aUser].name!=user.name){%>
+    <tr>
+   <td width="20%"><%=listUser[aUser].name%></td><td><%=listUser[aUser].email%></td><td><%=listUser[aUser].type%></td>
+   <td width="20%"><%if(listUser[aUser].type!="admin"){%><form  method='post' action='/deleteUser'>
+           <button class="btnSmall" name="userName" type="submit" value=<%=listUser[aUser].name%>>Delete</button>
+       </form>
+   </td>    <td width="20%">
+       <form  method='post' action='/makeAdmin'>
+           <button class="btnSmall" name="userName" type="submit" value=<%=listUser[aUser].name%>>Make Admin</button>
+       </form><%}%>
+     </td>
+    </tr>
+<%}}%>
+</table>
+
+
+<%- include footer %>

@@ -1,0 +1,20 @@
+<h1>Database collections relationships</h1>
+
+
+<p>Crime</p>
+    References: Location
+
+<p>Location</p>
+    References: Region
+    field: lat
+    field: long
+
+<p>Comment</p>
+    References: Region
+
+
+<p>User</p>
+    References: list of Comments
+
+<p>Region</p>
+    References: List of Comments

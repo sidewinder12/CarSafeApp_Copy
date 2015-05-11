@@ -1,0 +1,136 @@
+<%- include header %>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src='/javascripts/lib/jquery.min.js'></script>
+<script src="/javascripts/module/map/togeojson.js"></script>
+<script src="/javascripts/module/map/mapInit.js"></script>
+<script src="/javascripts/module/map/marker.js"></script>
+<script src="/javascripts/module/map/region.js"></script>
+<script src="/javascripts/module/map/circle.js"></script>
+<script src="/javascripts/module/map/crimeRadius.js"></script>
+<script src="/javascripts/module/map/geolocation.js"></script>
+<script src="/javascripts/module/map/maps-google-polygon-containslatlng.js"></script>
+
+<script src="/javascripts/module/comment/comments.js"></script>
+
+<div id="fb-root"></div>
+<script src="/javascripts/module/fb/fbInitialization.js"></script>
+<script src="javascripts/module/fb/fbDialog.js"></script>
+<script>
+
+
+    var map;
+    var markers = [];
+    var windows = [];
+    var boundaryJSON;
+    var regions = [], opened_info;
+    var cityCircle;
+    var geocoder;
+
+    // Hide all comments initially
+    hideAllComments();
+
+    //initialize();
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function initialize() {
+
+        mapInit();
+        <%for(var i in crimes) {%>
+
+        var contentString<%=i%> = 'Address: <%=crimes[i].address%> ';
+        var typeString<%=i%> = 'Type: <%=crimes[i].type%>';
+        var monthString<%=i%> = 'Month: <%=crimes[i].month%>';
+
+        var latLng = new google.maps.LatLng(<%=crimes[i].lat%>, <%=crimes[i].long%>);
+        var window = setUpInfoWindow(contentString<%=i%>,typeString<%=i%>,monthString<%=i%>);
+        var marker=  setUpAMarker( 'Address: <%=crimes[i].address%> ', latLng);
+        markers.push(marker);
+        windows.push(window);
+
+        setupMarkerListener(marker,window,regions);
+        <%}%>
+
+
+    }
+
+
+
+</script>
+
+
+<div id="panel" align="center">
+    <input onclick="scroll(0,600)" type=button class="btnExample2" width="20%" value="View Comments">
+    <input onclick="searchCrime();" type=button class="btnExample2" width="50%" value="Search Address">
+    <input onclick="getLocation();" type=button class="btnExample2" width="20%" value="Crimes Nearby">
+
+</div>
+
+<div align="center">
+    <select id="regionSelect" onchange="getRegions();getRegionComments();">
+        <option>Select Neighbourhood</option>
+        <option>SHOW ALL</option>
+
+        <% for(var i in regions){ %>
+
+        <option value="<%= regions[i].name %>"><%= regions[i].name %></option>
+        <% } %>
+
+    </select>
+</div>
+<div id="info-box">Current Neighbourhood</div>
+<div id="map-canvas"></div>
+<br>
+<div id="comments">
+    <h3>Comments:</h3>
+
+    <div id="submit-new-comment" align="right"><a href="/comment">Submit a new comment</a></div>
+
+    <% for(var i in comments){ %>
+
+    <div class="comment <%= comments[i].region %>" id="comment-<%= comments[i].region %>">
+
+        <div class="comment-title">
+
+            <script>
+
+                function openFbPopUp(bodypos) {
+                    var body, region;
+
+                    <%for(var j in comments){%>
+                    if (bodypos == '<%=j%>') {
+                        body = '<%=comments[j].body%>';
+                        region = '<%=comments[j].region%>'
+                    }
+                    <%}%>
+                    fbDialog(body, region);
+                }
+
+            </script>
+            <h3><u><%= comments[i].title %></u></h3>
+        </div>
+        <div class="comment-user">
+            <i>User: <%= comments[i].creator.name %></i>
+        </div>
+        <div class="comment-body">
+            <%= comments[i].body %>
+        </div>
+        <img src="/img/facebook.png" onclick="openFbPopUp(<%= i %>);">
+        <a class="twitter-share-button"
+           data-text="<%= comments[i].body %>"
+           data-count="none"
+           data-hashtags="CarSafe, Vancouver"
+           href="https://twitter.com/share">
+            Tweet
+        </a>
+        <script src="/javascripts/module/twitter/tweet.js"></script>
+        <br>
+
+    </div>
+    <% } %>
+
+</div>
+
+<a href="javascript:scroll(0,0)">Back to top</a>
+<%- include footer %>
+
+

@@ -1,0 +1,4 @@
+AutoSafe
+
+This is an app that stores Vancouver auto theft data, so that users can check their current location and see if it is safe to park. They can view the location of recent auto thefts on a map relative to their current location, search a custom address for nearby auto thefts, and also post comments on these locations, alerting others of safe or unsafe parking spots. 
+The user can register their car information and location, so that they can instantly alert social media in the event that their car has been stolen.
